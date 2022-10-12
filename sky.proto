@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package protos;
+
+option go_package = "github.com/getfexr/sky/protos";
+import "google/protobuf/empty.proto";
+
+// DART COMMAND: 
+
+// GO COMMAND (lib root dir): protoc --go_out=sync-v1/protos/pop --go_opt=paths=source_relative --go-grpc_out=sync-v1/protos/pop --go-grpc_opt=paths=source_relative --proto_path=sync-v1/protos pop.proto
+
+message HostRes {
+    string jwt = 1;
+    optional string dIDShare = 2;
+    optional string publicShare = 3;
+    optional string privateShare = 4;
+
+    optional string dIDHash = 5;
+    optional string peerID = 6;
+
+    optional int32 totalTxn = 7;
+    optional int32 stakedTokens = 8;
+    optional int32 credits = 9;
+    optional double balance = 10;
+    repeated TransactionHistory txnHistory = 11;
+    repeated QuorumSignedTransaction qSignedTxns = 12;
+    repeated TokenChain tChains = 13;
+}
+
+service SkyService {
+  rpc Host (stream HostReq) returns (HostRes) {}
+  rpc Notification (google.protobuf.Empty) returns (NotificationRes) {}
+  rpc Challenge (ChallengeReq) returns (ChallengeRes) {}
+  rpc Verify (VerifyReq) returns (VerifyRes) {}
+  rpc NativeInteraction (NativeInteractionReq) returns (NativeInteractionRes) {}
+  rpc Sync (SyncReq) returns (stream SyncRes) {}
+  rpc Pay(stream PayReq) returns (stream PayRes) {}
+}
