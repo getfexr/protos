@@ -72,11 +72,11 @@ message NativeInteractionRes {
 }
 
 message SyncReq {
-
+  string address = 1;
 }
 
 message SyncRes {
-
+  repeated NotificationRes notifications = 1;
 }
 
 message PayReq {
@@ -97,11 +97,11 @@ message PayRes {
 }
 
 message FindReq {
-
+  string address = 1;
 }
 
 message FindRes {
-
+  string message = 1;
 }
 
 service SkyService {
