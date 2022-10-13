@@ -1,0 +1,116 @@
+syntax = "proto3";
+package protos;
+option go_package = "github.com/getfexr/protos";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+message HostReq {
+  string signedOtp = 1;
+  string address = 2;
+  string F0 = 3;
+}
+
+message HostRes {
+    string accessToken = 1;
+    string refreshToken = 2;
+}
+
+message NotificationRes {
+  enum type {
+    transaction = 0;
+    promotion = 1;
+  }
+  type data = 1;
+  google.protobuf.Timestamp time = 2;
+  string id = 3;
+  optional string from = 4;
+  optional string to = 5;
+  optional double amount = 6;
+  optional string message = 7;
+  optional string bannerImage = 8;
+  optional string headingText = 9;
+  optional string cta = 10;
+}
+
+message ChallengeReq {
+  enum purposeType{ 
+    login = 0;
+    transaction = 1;
+    promotion = 2;
+  }
+  purposeType purpose = 1;
+  optional string address = 2; 
+  string purposeMessage = 3;
+  string permission = 4;
+  int32 expiryIn = 5;
+  google.protobuf.Timestamp expiryAt = 6;
+}
+
+message ChallengeRes {
+  string challengePayload = 1;
+  bool ok = 2;
+  optional string message = 3;
+}
+
+message VerifyReq {
+  string signedChallengePayload = 1;
+  string address = 2;
+}
+
+message VerifyRes {
+  bool connected = 1;
+  string authPoint = 2;
+  int32 authCode = 3;
+}
+
+message NativeInteractionReq {
+
+}
+
+message NativeInteractionRes {
+
+}
+
+message SyncReq {
+
+}
+
+message SyncRes {
+
+}
+
+message PayReq {
+  enum chain {
+    Rubix = 0;
+  }
+  chain name = 1;
+  string receiver = 2;
+  optional string comment = 3;
+  optional string validators = 4;
+}
+
+message PayRes {
+  bool status = 1;
+  int32 statusCode = 2;
+  string statusMessage = 3;
+  optional string transactionID = 4;
+}
+
+message FindReq {
+
+}
+
+message FindRes {
+
+}
+
+service SkyService {
+  rpc Host (stream HostReq) returns (HostRes) {}
+  rpc Notification (google.protobuf.Empty) returns (NotificationRes) {}
+  rpc Challenge (ChallengeReq) returns (ChallengeRes) {}
+  rpc Verify (VerifyReq) returns (VerifyRes) {}
+  rpc NativeInteraction (NativeInteractionReq) returns (NativeInteractionRes) {}
+  rpc Sync (SyncReq) returns (stream SyncRes) {}
+  rpc Pay(stream PayReq) returns (stream PayRes) {}
+  rpc Find(FindReq) returns (FindRes) {}
+}
