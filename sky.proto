@@ -34,22 +34,26 @@ message NotificationRes {
 
 message ChallengeReq {
   enum purposeType{ 
-    login = 0;
+    pass = 0;
     transaction = 1;
-    promotion = 2;
+    subscription = 2;
   }
   purposeType purpose = 1;
-  optional string address = 2; 
+  string address = 2;
   string purposeMessage = 3;
   string permission = 4;
   int32 expiryIn = 5;
   google.protobuf.Timestamp expiryAt = 6;
+  string authLink = 7;
+  string bannerImage = 8;
 }
 
 message ChallengeRes {
   string challengePayload = 1;
   bool ok = 2;
   optional string message = 3;
+  string authLink = 4;
+  string creatorAddress = 5;
 }
 
 message VerifyReq {
@@ -104,6 +108,14 @@ message FindRes {
   string message = 1;
 }
 
+message RelayReq {
+  string address = 1;
+}
+
+message RelayRes {
+  string message = 1;
+}
+
 service SkyService {
   rpc Host (stream HostReq) returns (HostRes) {}
   rpc Notification (google.protobuf.Empty) returns (NotificationRes) {}
@@ -112,5 +124,9 @@ service SkyService {
   rpc NativeInteraction (NativeInteractionReq) returns (NativeInteractionRes) {}
   rpc Sync (SyncReq) returns (stream SyncRes) {}
   rpc Pay(stream PayReq) returns (stream PayRes) {}
+  // Find a user address or a transaction hash circuited with any of the Fexr partnered subnets. 
+  // Available in fexr.club home page and in the app.
   rpc Find(FindReq) returns (FindRes) {}
+  // Relay external requests or messages between subnets or nodes within the subnets partnered with Fexr.
+  rpc Relay(RelayReq) returns (RelayRes) {}
 }
