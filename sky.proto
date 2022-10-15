@@ -54,6 +54,7 @@ message ChallengeRes {
   optional string message = 3;
   string updatedAuthLink = 4;
   string creatorAddress = 5;
+  int32 expiryIn = 6;
 }
 
 message VerifyReq {
