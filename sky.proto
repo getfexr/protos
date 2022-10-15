@@ -39,22 +39,19 @@ message ChallengeReq {
     subscription = 2;
   }
   purposeType purpose = 1;
-  string address = 2;
+  string receiver = 2;
   string purposeMessage = 3;
-  string permission = 4;
+  optional string permission = 4;
   int32 expiryIn = 5;
   google.protobuf.Timestamp expiryAt = 6;
   string authLink = 7;
-  string bannerImage = 8;
+  optional string bannerImage = 8;
 }
 
 message ChallengeRes {
   string challengePayload = 1;
   bool ok = 2;
   optional string message = 3;
-  string updatedAuthLink = 4;
-  string creatorAddress = 5;
-  int32 expiryIn = 6;
 }
 
 message VerifyReq {
