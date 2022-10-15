@@ -52,7 +52,7 @@ message ChallengeRes {
   string challengePayload = 1;
   bool ok = 2;
   optional string message = 3;
-  string authLink = 4;
+  string updatedAuthLink = 4;
   string creatorAddress = 5;
 }
 
