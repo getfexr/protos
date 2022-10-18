@@ -43,7 +43,7 @@ message ChallengeReq {
   string purposeMessage = 3;
   optional string permission = 4;
   int32 expiryIn = 5;
-  google.protobuf.Timestamp expiryAt = 6;
+  optional google.protobuf.Timestamp expiryAt = 6;
   string authLink = 7;
   optional string bannerImage = 8;
 }
@@ -55,7 +55,7 @@ message ChallengeRes {
 }
 
 message VerifyReq {
-  string signedChallengePayload = 1;
+  string challengePayload = 1;
   string address = 2;
 }
 
@@ -65,14 +65,17 @@ message VerifyRes {
   int32 authCode = 3;
 }
 
+//TODO: require discussion
 message NativeInteractionReq {
 
 }
 
+//TODO: require discussion
 message NativeInteractionRes {
 
 }
 
+//TODO: require discussion
 message SyncReq {
   string address = 1;
 }
@@ -98,18 +101,23 @@ message PayRes {
   optional string transactionID = 4;
 }
 
+//TODO: require discussion
 message FindReq {
   string address = 1;
 }
 
+//TODO: require discussion
 message FindRes {
   string message = 1;
 }
 
+//TODO: require discussion
 message RelayReq {
   string address = 1;
+  bool noreply = 2;
 }
 
+//TODO: require discussion
 message RelayRes {
   string message = 1;
 }
@@ -120,11 +128,12 @@ service SkyService {
   rpc Challenge (ChallengeReq) returns (ChallengeRes) {}
   rpc Verify (VerifyReq) returns (VerifyRes) {}
   rpc NativeInteraction (NativeInteractionReq) returns (NativeInteractionRes) {}
+  // two way syncing of wallet summary and wallets, balance, payments & activity data from a gateway.
   rpc Sync (SyncReq) returns (stream SyncRes) {}
   rpc Pay(stream PayReq) returns (stream PayRes) {}
   // Find a user address or a transaction hash circuited with any of the Fexr partnered subnets. 
   // Available in fexr.club home page and in the app.
   rpc Find(FindReq) returns (FindRes) {}
-  // Relay external requests or messages between subnets or nodes within the subnets partnered with Fexr.
+  // Relay external requests or messages between subnets or nodes within the subnets partnered with Fexr. Optionally receive a response back to the sender.
   rpc Relay(RelayReq) returns (RelayRes) {}
 }
