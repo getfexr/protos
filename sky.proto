@@ -123,7 +123,7 @@ message RelayRes {
 }
 
 service SkyService {
-  rpc Host (stream HostReq) returns (HostRes) {}
+  rpc Host (HostReq) returns (HostRes) {}
   rpc Notification (google.protobuf.Empty) returns (NotificationRes) {}
   rpc Challenge (ChallengeReq) returns (ChallengeRes) {}
   rpc Verify (VerifyReq) returns (VerifyRes) {}
