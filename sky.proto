@@ -38,14 +38,10 @@ message ChallengeReq {
     transaction = 1;
     subscription = 2;
   }
-  purposeType purpose = 1;
-  string receiver = 2;
-  string purposeMessage = 3;
-  optional string permission = 4;
-  int32 expiryIn = 5;
-  optional google.protobuf.Timestamp expiryAt = 6;
-  string authLink = 7;
-  optional string bannerImage = 8;
+  optional purposeType purpose = 1;
+  string sender = 2;
+  string challengeBody = 3;
+  optional google.protobuf.Timestamp issuedAt = 4;
 }
 
 message ChallengeRes {
