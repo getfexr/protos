@@ -6,13 +6,22 @@ import "google/protobuf/timestamp.proto";
 
 message HostReq {
   string signedOtp = 1;
-  string address = 2;
-  string F0 = 3;
+  string otp = 2;
+  string address = 3;
+  string F0 = 4;
 }
 
 message HostRes {
-    string accessToken = 1;
-    string refreshToken = 2;
+  message AccessToken {
+    string token = 1;
+    google.protobuf.Timestamp expiry = 2;
+  };
+  message RefreshToken {
+    string token = 1;
+    google.protobuf.Timestamp expiry = 2;
+  };
+  AccessToken accessToken = 1;
+  RefreshToken refreshToken = 2;
 }
 
 message NotificationRes {
