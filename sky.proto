@@ -110,6 +110,11 @@ message PayRes {
   optional string transactionID = 4;
 }
 
+message GetUserInfoRes {
+  string address = 2;
+  string f0 = 3;
+}
+
 //TODO: require discussion
 message FindReq {
   string address = 1;
@@ -145,4 +150,5 @@ service SkyService {
   rpc Find(FindReq) returns (FindRes) {}
   // Relay external requests or messages between subnets or nodes within the subnets partnered with Fexr. Optionally receive a response back to the sender.
   rpc Relay(RelayReq) returns (RelayRes) {}
+  rpc GetUserInfo (google.protobuf.Empty) returns (GetUserInfoRes) {}
 }
