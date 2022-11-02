@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package protos;
+
+option go_package = "github.com/getfexr/protos";
+
+message CreateDIDReq {
+  string didImage = 1;
+  string publicShare = 2;
+}
+
+message CreateDIDRes {
+  bool success = 1;
+}
+
+service RubixService {
+  rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
+}
