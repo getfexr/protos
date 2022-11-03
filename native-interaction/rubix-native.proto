@@ -13,6 +13,32 @@ message CreateDIDRes {
   bool success = 1;
 }
 
+message RequestTransactionPayloadReq {
+  string receiver = 1;
+  int32 tokenCount = 2;
+  string comment = 3;
+  int32 type = 4;
+}
+
+message RequestTransactionPayloadRes {
+  string payload = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+message SignedTransactionPayload {
+  string payload = 1;
+  string signature = 2;
+}
+
+message InitiateTransactionRes {
+  string message = 1;
+  bool success = 2;
+}
+
 service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
+
+  rpc RequestTransactionPayload (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
+  rpc InitiateTransaction (SignedTransactionPayload) returns (InitiateTransactionRes) {}
 }
