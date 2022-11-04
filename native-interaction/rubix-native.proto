@@ -30,10 +30,12 @@ message TxnDetails {
   string tokenPreviousSender = 7;
   string doubleSpendString = 8;
   string receiverDidIpfsHash = 9;
-  string requestedAmount = 10;
+  double requestedAmount = 10;
   string comment = 11;
   string tid = 12;
   string allTokens = 13;
+  bool newPart = 14;
+  bool oldPart = 15;
 }
 
 message RequestTransactionPayloadRes {
