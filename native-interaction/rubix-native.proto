@@ -32,6 +32,8 @@ message TxnDetails {
   string receiverDidIpfsHash = 9;
   string requestedAmount = 10;
   string comment = 11;
+  string tid = 12;
+  string allTokens = 13;
 }
 
 message RequestTransactionPayloadRes {
