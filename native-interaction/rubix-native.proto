@@ -20,25 +20,60 @@ message RequestTransactionPayloadReq {
   int32 type = 4;
 }
 
-message RequestTransactionPayloadRes {
-  string payload = 1;
-  bool success = 2;
-  string message = 3;
+message TxnDetails {
+  string wholeTokens = 1;
+  string wholeTokenChainHash = 2;
+  string partTokenChainHash = 3;
+  string partTokens = 4;
+  string partTokenChainArrays = 5;
+  string amountLedger = 6;
+  string tokenPreviousSender = 7;
+  string doubleSpendString = 8;
+  string receiverDidIpfsHash = 9;
+  string requestedAmount = 10;
+  string comment = 11;
 }
 
-message SignedTransactionPayload {
-  string payload = 1;
-  string signature = 2;
+message RequestTransactionPayloadRes {
+  message TxnSignPayload {
+    string senderSign = 1;
+    string senderSignQ = 2;
+    TxnDetails txnDetails = 3;
+  }
+
+  string did = 1;
+  string tid = 2;
+  TxnSignPayload payload = 3;
+}
+
+message InitiateTransactionReq {
+  message SignedTransactionPayload {
+    message SignedContent {
+      string content = 1;
+      string signature = 2;
+    }
+
+    string positions = 1;
+    SignedContent senderSign = 2;
+    SignedContent senderSignQ = 3;
+    TxnDetails txnDetails = 4;
+  }
+
+  string receiver = 1;
+  double tokenCount = 2;
+  int32 type = 3;
+  SignedTransactionPayload payloadSigned = 4;
 }
 
 message InitiateTransactionRes {
-  string message = 1;
-  bool success = 2;
+  bool success = 1;
+  string message = 2;
+  string transactionId = 3;
 }
 
 service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
 
   rpc RequestTransactionPayload (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
-  rpc InitiateTransaction (SignedTransactionPayload) returns (InitiateTransactionRes) {}
+  rpc InitiateTransaction (InitiateTransactionReq) returns (InitiateTransactionRes) {}
 }
