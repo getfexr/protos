@@ -21,34 +21,25 @@ message RequestTransactionPayloadReq {
   int32 type = 4;
 }
 
-message TxnDetails {
-  string wholeTokens = 1;
-  string wholeTokenChainHash = 2;
-  string partTokenChainHash = 3;
-  string partTokens = 4;
-  string partTokenChainArrays = 5;
-  string amountLedger = 6;
-  string tokenPreviousSender = 7;
-  string doubleSpendString = 8;
-  string receiverDidIpfsHash = 9;
-  double requestedAmount = 10;
-  string comment = 11;
-  string tid = 12;
-  string allTokens = 13;
-  bool newPart = 14;
-  bool oldPart = 15;
+message TxnSummary {
+  string txnId = 1;
+  string sender = 2;
+  string receiver = 3;
+  double amount = 4;
+  string comment = 5;
 }
 
 message RequestTransactionPayloadRes {
   message TxnSignPayload {
     string senderSign = 1;
     string senderSignQ = 2;
-    TxnDetails txnDetails = 3;
+    string txnDetails = 3;
   }
 
   string did = 1;
   string tid = 2;
   TxnSignPayload payload = 3;
+  TxnSummary txnSummary = 4;
 }
 
 message InitiateTransactionReq {
@@ -61,7 +52,7 @@ message InitiateTransactionReq {
     string positions = 1;
     SignedContent senderSign = 2;
     SignedContent senderSignQ = 3;
-    TxnDetails txnDetails = 4;
+    string txnDetails = 4;
   }
 
   string receiver = 1;
