@@ -10,7 +10,8 @@ message CreateDIDReq {
 }
 
 message CreateDIDRes {
-  bool success = 1;
+  string did = 1;
+  string walletId = 2;
 }
 
 message RequestTransactionPayloadReq {
