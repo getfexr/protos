@@ -16,7 +16,7 @@ message CreateDIDRes {
 
 message RequestTransactionPayloadReq {
   string receiver = 1;
-  int32 tokenCount = 2;
+  double tokenCount = 2;
   string comment = 3;
   int32 type = 4;
 }
