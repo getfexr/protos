@@ -42,13 +42,13 @@ message RequestTransactionPayloadRes {
   TxnSummary txnSummary = 4;
 }
 
+message SignedContent {
+  string content = 1;
+  string signature = 2;
+}
+
 message InitiateTransactionReq {
   message SignedTransactionPayload {
-    message SignedContent {
-      string content = 1;
-      string signature = 2;
-    }
-
     string positions = 1;
     SignedContent senderSign = 2;
     SignedContent senderSignQ = 3;
