@@ -61,15 +61,9 @@ message InitiateTransactionReq {
   SignedTransactionPayload payloadSigned = 4;
 }
 
-message InitiateTransactionRes {
-  bool success = 1;
-  string message = 2;
-  string transactionId = 3;
-}
-
 service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
 
   rpc RequestTransactionPayload (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
-  rpc InitiateTransaction (InitiateTransactionReq) returns (InitiateTransactionRes) {}
+  rpc InitiateTransaction (InitiateTransactionReq) returns (TxnSummary) {}
 }
