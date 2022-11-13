@@ -4,6 +4,8 @@ package protos;
 
 option go_package = "github.com/getfexr/protos";
 
+import "google/protobuf/empty.proto";
+
 message CreateDIDReq {
   string didImage = 1;
   string publicShare = 2;
@@ -19,6 +21,7 @@ message RequestTransactionPayloadReq {
   double tokenCount = 2;
   string comment = 3;
   int32 type = 4;
+  optional string privateKeyPass = 5;
 }
 
 message TxnSummary {
@@ -29,17 +32,28 @@ message TxnSummary {
   string comment = 5;
 }
 
-message RequestTransactionPayloadRes {
-  message TxnSignPayload {
-    string senderSign = 1;
-    string senderSignQ = 2;
-    string txnDetails = 3;
-  }
+message TransactionLastObject {
+  string hash = 1;
+  string token = 2;
+}
 
-  string did = 1;
-  string tid = 2;
-  TxnSignPayload payload = 3;
-  TxnSummary txnSummary = 4;
+message TransactionLastObjectSigned {
+  string chainSign = 1;
+  string hash = 2;
+  string token = 3;
+}
+
+message RequestTransactionPayloadRes {
+  string authSenderByRecHash = 1;
+  repeated TransactionLastObject lastObject = 2;
+  string senderPayloadSign = 3;
+}
+
+message FinaliseTransactionPayload {
+  string authSenderByRecHash = 1;
+  repeated TransactionLastObjectSigned lastObject = 2;
+  string senderPayloadSign = 3;
+  optional string privateKeyPass = 4;
 }
 
 message SignedContent {
@@ -61,9 +75,24 @@ message InitiateTransactionReq {
   SignedTransactionPayload payloadSigned = 4;
 }
 
+message GetTransactionLogReq {
+  uint32 count = 1;
+}
+
+message GetTransactionLogRes {
+  repeated TxnSummary txnLog = 1;
+}
+
+message GetBalanceRes {
+  double balance = 1;
+}
+
 service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
 
-  rpc RequestTransactionPayload (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
-  rpc InitiateTransaction (InitiateTransactionReq) returns (TxnSummary) {}
+  rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
+  rpc FinaliseTransaction (FinaliseTransactionPayload) returns (TxnSummary) {}
+
+  rpc GetTransactionLog (GetTransactionLogReq) returns (GetTransactionLogRes) {}
+  rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
 }
