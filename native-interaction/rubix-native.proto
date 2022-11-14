@@ -44,10 +44,22 @@ message TransactionLastObjectSigned {
   string token = 3;
 }
 
+message PledgeDetail {
+  string quorum = 1;
+  repeated string hashes = 2;
+}
+
+message PledgeDetailSigned {
+  string quorum = 1;
+  repeated string hashes = 2;
+  repeated string signs = 3;
+}
+
 message RequestTransactionPayloadRes {
   string authSenderByRecHash = 1;
   repeated TransactionLastObject lastObject = 2;
   string senderPayloadSign = 3;
+  repeated PledgeDetail pledgeDetails = 4;
 }
 
 message FinaliseTransactionPayload {
@@ -55,6 +67,7 @@ message FinaliseTransactionPayload {
   repeated TransactionLastObjectSigned lastObject = 2;
   string senderPayloadSign = 3;
   optional string privateKeyPass = 4;
+  repeated PledgeDetailSigned pledgeDetails = 5;
 }
 
 message SignedContent {
