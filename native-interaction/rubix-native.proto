@@ -44,49 +44,32 @@ message TransactionLastObjectSigned {
   string token = 3;
 }
 
+message SignedHash {
+  string hash = 1;
+  string sign = 2;
+}
+
 message PledgeDetail {
-  string quorum = 1;
-  repeated string hashes = 2;
+  repeated string valueArr = 1;
 }
 
 message PledgeDetailSigned {
-  string quorum = 1;
-  repeated string hashes = 2;
-  repeated string signs = 3;
+  repeated SignedHash valueArr = 2;
 }
 
 message RequestTransactionPayloadRes {
   string authSenderByRecHash = 1;
   repeated TransactionLastObject lastObject = 2;
   string senderPayloadSign = 3;
-  repeated PledgeDetail pledgeDetails = 4;
+  map<string, PledgeDetail> pledgeDetails = 4;
 }
 
 message FinaliseTransactionPayload {
-  string authSenderByRecHash = 1;
+  SignedHash authSenderByRecHash = 1;
   repeated TransactionLastObjectSigned lastObject = 2;
-  string senderPayloadSign = 3;
+  SignedHash senderPayloadSign = 3;
   optional string privateKeyPass = 4;
-  repeated PledgeDetailSigned pledgeDetails = 5;
-}
-
-message SignedContent {
-  string content = 1;
-  string signature = 2;
-}
-
-message InitiateTransactionReq {
-  message SignedTransactionPayload {
-    string positions = 1;
-    SignedContent senderSign = 2;
-    SignedContent senderSignQ = 3;
-    string txnDetails = 4;
-  }
-
-  string receiver = 1;
-  double tokenCount = 2;
-  int32 type = 3;
-  SignedTransactionPayload payloadSigned = 4;
+  map<string,PledgeDetailSigned> pledgeDetails = 5;
 }
 
 message GetTransactionLogReq {
