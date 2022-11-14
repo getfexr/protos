@@ -9,6 +9,7 @@ import "google/protobuf/empty.proto";
 message CreateDIDReq {
   string didImage = 1;
   string publicShare = 2;
+  string privateKeyPass = 3;
 }
 
 message CreateDIDRes {
