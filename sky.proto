@@ -115,6 +115,10 @@ message GetUserInfoRes {
   string f0 = 3;
 }
 
+message ConnectionRes {
+  string status = 1;
+}
+
 //TODO: require discussion
 message FindReq {
   string address = 1;
@@ -142,6 +146,7 @@ service SkyService {
   rpc Challenge (ChallengeReq) returns (ChallengeRes) {}
   rpc Verify (VerifyReq) returns (VerifyRes) {}
   rpc NativeInteraction (NativeInteractionReq) returns (NativeInteractionRes) {}
+  rpc CheckConnection (google.protobuf.Empty) returns (ConnectionRes) {}
   // two way syncing of wallet summary and wallets, balance, payments & activity data from a gateway.
   rpc Sync (SyncReq) returns (stream SyncRes) {}
   rpc Pay(stream PayReq) returns (stream PayRes) {}
