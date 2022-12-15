@@ -1,0 +1,28 @@
+syntax = "proto3";
+package protos;
+import "google/protobuf/empty.proto";
+
+message TransactionDetails {
+    string receiver = 1;
+    double tokenCount = 2;
+    string comment = 3;
+}
+
+message TransactionRes {
+    string status = 1;
+}
+
+message Authenticate {
+    string browserId = 1;
+}
+
+message ApproveBrowserRes {
+    bool status = 1;
+}
+
+
+service ExternalListenerService {
+    rpc StreamTransactionRequest (google.protobuf.Empty) returns (stream TransactionDetails) {}
+    rpc StreamAuthenticateRequest (google.protobuf.Empty) returns (stream Authenticate) {}
+    rpc ApproveBrowser (Authenticate) returns (ApproveBrowserRes);
+}
