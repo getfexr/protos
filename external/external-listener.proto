@@ -14,6 +14,7 @@ message TransactionRes {
 
 message Authenticate {
     string browserId = 1;
+    string signedBrowserId = 2;
 }
 
 message ApproveBrowserRes {
