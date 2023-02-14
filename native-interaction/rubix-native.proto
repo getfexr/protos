@@ -9,12 +9,12 @@ import "google/protobuf/empty.proto";
 message CreateDIDReq {
   string didImage = 1;
   string publicShare = 2;
-  string privateKeyPass = 3;
+  string publicKey = 3;
 }
 
 message CreateDIDRes {
   string did = 1;
-  string walletId = 2;
+  string status = 2;
 }
 
 message RequestTransactionPayloadReq {
