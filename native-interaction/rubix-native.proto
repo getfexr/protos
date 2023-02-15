@@ -14,7 +14,7 @@ message CreateDIDReq {
 
 message CreateDIDRes {
   string did = 1;
-  string status = 2;
+  bool status = 2;
 }
 
 message RequestTransactionPayloadReq {
