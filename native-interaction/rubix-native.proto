@@ -22,7 +22,6 @@ message RequestTransactionPayloadReq {
   double tokenCount = 2;
   string comment = 3;
   int32 type = 4;
-  optional string privateKeyPass = 5;
 }
 
 message TxnSummary {
@@ -58,10 +57,18 @@ message PledgeDetailSigned {
 }
 
 message RequestTransactionPayloadRes {
-  string authSenderByRecHash = 1;
-  repeated TransactionLastObject lastObject = 2;
-  string senderPayloadSign = 3;
-  map<string, PledgeDetail> pledgeDetails = 4;
+  string requestId = 1;
+  string hash = 2;
+}
+
+message HashSigned {
+  string id = 1;
+  bytes pvtSign = 2;
+  bytes imgSign = 3;
+}
+
+message Status {
+  bool status = 1;
 }
 
 message FinaliseTransactionPayload {
@@ -88,6 +95,7 @@ service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
 
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
+  rpc SignResponse (HashSigned) returns (Status) {}
   rpc FinaliseTransaction (FinaliseTransactionPayload) returns (TxnSummary) {}
 
   rpc GetTransactionLog (GetTransactionLogReq) returns (GetTransactionLogRes) {}
