@@ -72,6 +72,11 @@ message Status {
   bool status = 1;
 }
 
+message GenerateReq {
+  double tokenCount = 1;
+  string did = 2;
+}
+
 message FinaliseTransactionPayload {
   SignedHash authSenderByRecHash = 1;
   repeated TransactionLastObjectSigned lastObject = 2;
@@ -98,7 +103,7 @@ service RubixService {
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
   rpc SignResponse (HashSigned) returns (Status) {}
   rpc FinaliseTransaction (FinaliseTransactionPayload) returns (TxnSummary) {}
-
+  rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
   rpc GetTransactionLog (GetTransactionLogReq) returns (GetTransactionLogRes) {}
   rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
 }
