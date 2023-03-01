@@ -12,18 +12,19 @@ message TransactionRes {
     string status = 1;
 }
 
-message Authenticate {
-    string browserId = 1;
-    string signedBrowserId = 2;
+message AuthPayload {
+    string uuid = 1;
+}
+
+message QRData {
+  string data = 1;
 }
 
 message ApproveBrowserRes {
     bool status = 1;
 }
 
-
 service ExternalListenerService {
     rpc StreamTransactionRequest (google.protobuf.Empty) returns (stream TransactionDetails) {}
-    rpc StreamAuthenticateRequest (google.protobuf.Empty) returns (stream Authenticate) {}
-    rpc ApproveBrowser (Authenticate) returns (ApproveBrowserRes);
+    rpc ApproveBrowser (QRData) returns (ApproveBrowserRes);
 }
