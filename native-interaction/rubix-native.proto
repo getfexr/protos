@@ -4,8 +4,6 @@ package protos;
 
 option go_package = "github.com/getfexr/protos";
 
-import "google/protobuf/empty.proto";
-
 message CreateDIDReq {
   string didImage = 1;
   string publicShare = 2;
@@ -23,38 +21,6 @@ message RequestTransactionPayloadReq {
   double tokenCount = 3;
   string comment = 4;
   int32 type = 5;
-}
-
-message TxnSummary {
-  string txnId = 1;
-  string sender = 2;
-  string receiver = 3;
-  double amount = 4;
-  string comment = 5;
-}
-
-message TransactionLastObject {
-  string hash = 1;
-  string token = 2;
-}
-
-message TransactionLastObjectSigned {
-  string chainSign = 1;
-  string hash = 2;
-  string token = 3;
-}
-
-message SignedHash {
-  string hash = 1;
-  string sign = 2;
-}
-
-message PledgeDetail {
-  repeated string valueArr = 1;
-}
-
-message PledgeDetailSigned {
-  repeated SignedHash valueArr = 2;
 }
 
 message RequestTransactionPayloadRes {
@@ -77,33 +43,9 @@ message GenerateReq {
   string did = 2;
 }
 
-message FinaliseTransactionPayload {
-  SignedHash authSenderByRecHash = 1;
-  repeated TransactionLastObjectSigned lastObject = 2;
-  SignedHash senderPayloadSign = 3;
-  optional string privateKeyPass = 4;
-  map<string,PledgeDetailSigned> pledgeDetails = 5;
-}
-
-message GetTransactionLogReq {
-  uint32 count = 1;
-}
-
-message GetTransactionLogRes {
-  repeated TxnSummary txnLog = 1;
-}
-
-message GetBalanceRes {
-  double balance = 1;
-}
-
 service RubixService {
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
-
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
   rpc SignResponse (HashSigned) returns (Status) {}
-  rpc FinaliseTransaction (FinaliseTransactionPayload) returns (TxnSummary) {}
   rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
-  rpc GetTransactionLog (GetTransactionLogReq) returns (GetTransactionLogRes) {}
-  rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
 }
