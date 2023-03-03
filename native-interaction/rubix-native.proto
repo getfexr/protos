@@ -3,16 +3,38 @@ syntax = "proto3";
 package protos;
 
 option go_package = "github.com/getfexr/protos";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message SignedPayload {
+  string payload = 1;
+  bytes signature = 2;
+}
+
+message ChallengeString {
+  string challenge = 1;
+}
+
+message Token {
+  string accessToken = 1;
+  google.protobuf.Timestamp expiry = 2;
+}
 
 message CreateDIDReq {
   string didImage = 1;
   string publicShare = 2;
   string publicKey = 3;
+
+  // For sky's verification
+  SignedPayload ecdsaChallengeResponse = 4;
 }
 
 message CreateDIDRes {
   string did = 1;
   bool status = 2;
+
+  // For Rubix DID access via sky
+  Token accessToken = 3;
 }
 
 message RequestTransactionPayloadReq {
@@ -44,6 +66,7 @@ message GenerateReq {
 }
 
 service RubixService {
+  rpc CreateDIDChallenge (google.protobuf.Empty) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
   rpc SignResponse (HashSigned) returns (Status) {}
