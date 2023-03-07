@@ -11,6 +11,10 @@ message SignedPayload {
   bytes signature = 2;
 }
 
+message ChallengeReq {
+  string publicKey = 1;
+}
+
 message ChallengeString {
   string challenge = 1;
 }
@@ -69,7 +73,7 @@ message GetBalanceRes {
 }
 
 service RubixService {
-  rpc CreateDIDChallenge (google.protobuf.Empty) returns (ChallengeString) {}
+  rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
   rpc SignResponse (HashSigned) returns (Status) {}
