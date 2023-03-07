@@ -39,7 +39,6 @@ message CreateDIDRes {
 
 message RequestTransactionPayloadReq {
   string receiver = 1;
-  string sender = 2;
   double tokenCount = 3;
   string comment = 4;
   int32 type = 5;
@@ -65,10 +64,15 @@ message GenerateReq {
   string did = 2;
 }
 
+message GetBalanceRes {
+  double balance = 1;
+}
+
 service RubixService {
   rpc CreateDIDChallenge (google.protobuf.Empty) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
   rpc SignResponse (HashSigned) returns (Status) {}
   rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
+  rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
 }
