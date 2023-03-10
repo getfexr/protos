@@ -72,10 +72,23 @@ message GetBalanceRes {
   double balance = 1;
 }
 
+message IncomingTxnDetails {
+  string txnId = 1;
+  string sender = 2;
+  string receiver = 3;
+  double amount = 4;
+  string comment = 5;
+  int32 type = 6;
+  google.protobuf.Timestamp timestamp = 7;
+  string tickerName = 8;
+  double gas = 9;
+}
+
 service RubixService {
   rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
   rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
+  rpc StreamIncomingTxn (google.protobuf.Empty) returns (stream IncomingTxnDetails) {}
   rpc SignResponse (HashSigned) returns (Status) {}
   rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
   rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
