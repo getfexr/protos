@@ -92,4 +92,6 @@ service RubixService {
   rpc SignResponse (HashSigned) returns (Status) {}
   rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
   rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
+  rpc GetAccessTokenChallenge (google.protobuf.Empty) returns (ChallengeString) {}
+  rpc GenerateAccessToken(SignedPayload) returns (Token) {}
 }
