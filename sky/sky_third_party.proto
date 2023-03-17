@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package protos;
+
+option go_package = "github.com/getfexr/protos";
+message QRInfoRequest {
+  string payload = 1;
+}
+
+message QRInfoResponse {
+  string purpose = 1;
+  string payload = 2;
+}
+
+service SkyThirdPartyService {
+  rpc GetQRInfo (QRInfoRequest) returns (QRInfoResponse) {}
+}
+
