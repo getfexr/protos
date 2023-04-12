@@ -84,6 +84,25 @@ message IncomingTxnDetails {
   double gas = 9;
 }
 
+message TransactionDetails {
+  string transactionId = 1;
+  string transactionType = 2;
+  string blockId = 3;
+  int32 mode = 4;
+  string senderDID = 5;
+  string receiverDID = 6;
+  double amount = 7;
+  double totalTime = 8;
+  string comment = 9;
+  google.protobuf.Timestamp dateTime = 10;
+  bool status = 11;
+}
+
+message TransactionHistory {
+  repeated TransactionDetails transactions = 1;
+  string error = 2;
+}
+
 service RubixService {
   rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
@@ -94,4 +113,5 @@ service RubixService {
   rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
   rpc GetAccessTokenChallenge (google.protobuf.Empty) returns (ChallengeString) {}
   rpc GenerateAccessToken(SignedPayload) returns (Token) {}
+  rpc GetTransactionHistory(google.protobuf.Empty) returns (TransactionHistory) {}
 }
