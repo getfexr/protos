@@ -8,6 +8,16 @@ message AuthRequest {
   string uuid = 1;
 }
 
+message OrgAuthRequest {
+  string orgName = 1;
+  string callBackUrl = 2;
+  string sessionId = 3;
+}
+
+message OrgStatus {
+  bool status = 1;
+}
+
 message TxnRequest {
   string receiver = 1;
   double amount = 2;
@@ -20,5 +30,6 @@ message TxnRequest {
 
 service RubixExternal {
   rpc ApproveAuthRequest (AuthRequest) returns (google.protobuf.Empty) {}
+  rpc ApproveOrgAuthRequest (OrgAuthRequest) returns (OrgStatus) {}
   rpc StreamTransactionRequest (google.protobuf.Empty) returns (stream TxnRequest) {}
 }
