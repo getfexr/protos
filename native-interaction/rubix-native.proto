@@ -114,4 +114,5 @@ service RubixService {
   rpc GetAccessTokenChallenge (google.protobuf.Empty) returns (ChallengeString) {}
   rpc GenerateAccessToken(SignedPayload) returns (Token) {}
   rpc GetTransactionHistory(google.protobuf.Empty) returns (TransactionHistory) {}
+  rpc StreamSignResponse(google.protobuf.Empty) returns (stream RequestTransactionPayloadRes) {}
 }
