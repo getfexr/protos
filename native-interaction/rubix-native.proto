@@ -104,7 +104,7 @@ message TransactionHistory {
 }
 
 message OnChainAsset {
-  string timsstamp =1;
+  string timestamp =1;
   string assetName =2;
   string creatorName =3;
   string creatorDID =4;
@@ -114,6 +114,10 @@ message OnChainAsset {
   string hash = 8;
   string chain = 9;
   string url = 10;
+}
+
+message Assets {
+  repeated OnChainAsset assets = 1;
 }
 
 
@@ -130,5 +134,5 @@ service RubixService {
   rpc GetTransactionHistory(google.protobuf.Empty) returns (TransactionHistory) {}
   rpc StreamSignResponse (google.protobuf.Empty) returns (stream RequestTransactionPayloadRes) {}
   rpc SignData (HashSigned) returns (Status) {}
-  rpc getAsset (google.protobuf.Empty) returns (OnChainAsset) {}
+  rpc getAsset (google.protobuf.Empty) returns (Assets) {}
 }
