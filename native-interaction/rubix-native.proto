@@ -104,15 +104,18 @@ message TransactionHistory {
 }
 
 message OnChainAsset {
-  string type =1;
-  string creatorDid =2;
-  string totalSupply =3;
-  string tokenNumber =4;
-  string creatorInput =5;
-  string hash =6;
-  string url =7;
-  string signature = 8;
+  string timsstamp =1;
+  string assetName =2;
+  string creatorName =3;
+  string creatorDID =4;
+  string price =5;
+  string note =6;
+  string status =7;
+  string hash = 8;
+  string chain = 9;
+  string url = 10;
 }
+
 
 service RubixService {
   rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
