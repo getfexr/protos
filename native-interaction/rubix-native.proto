@@ -103,6 +103,17 @@ message TransactionHistory {
   string error = 2;
 }
 
+message OnChainAsset {
+  string type =1;
+  string creatorDid =2;
+  string totalSupply =3;
+  string tokenNumber =4;
+  string creatorInput =5;
+  string hash =6;
+  string url =7;
+  string signature = 8;
+}
+
 service RubixService {
   rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
@@ -116,4 +127,5 @@ service RubixService {
   rpc GetTransactionHistory(google.protobuf.Empty) returns (TransactionHistory) {}
   rpc StreamSignResponse (google.protobuf.Empty) returns (stream RequestTransactionPayloadRes) {}
   rpc SignData (HashSigned) returns (Status) {}
+  rpc getAsset (google.protobuf.Empty) returns (OnChainAsset) {}
 }
