@@ -12,10 +12,16 @@ message SignedPayload {
 }
 
 message ChallengeReq {
-  string publicKey = 1;
+  string did = 1;
 }
 
-message ChallengeString {
+message AccessReq {
+  string did = 1;
+  string password = 2;
+  SignedPayload payload = 3;
+}
+
+message ChallengeResp {
   string challenge = 1;
 }
 
@@ -25,12 +31,16 @@ message Token {
 }
 
 message CreateDIDReq {
-  string didImage = 1;
-  string publicShare = 2;
-  string publicKey = 3;
-
+  int32 didMode = 1;
+  string privKeyPwd = 2;
+  string quorumKeyPwd = 3;
+  string secret = 4;
+  string didImage = 5;
+  string publicShare = 6;
+  string publicKey = 7;
+  string masterDid = 8;
   // For sky's verification
-  SignedPayload ecdsaChallengeResponse = 4;
+  SignedPayload ecdsaChallengeResponse = 9;
 }
 
 message CreateDIDRes {
@@ -41,11 +51,11 @@ message CreateDIDRes {
   Token accessToken = 3;
 }
 
-message RequestTransactionPayloadReq {
-  string receiver = 1;
+message TransferRBTReq {
+  int32 type = 1;
+  string receiver = 2;
   double tokenCount = 3;
   string comment = 4;
-  int32 type = 5;
 }
 
 message RequestTransactionPayloadRes {
@@ -68,8 +78,60 @@ message GenerateReq {
   string did = 2;
 }
 
+message GenerateResp {
+  repeated string tokens = 1;
+}
+
 message GetBalanceRes {
   double balance = 1;
+}
+
+message SignRequest {
+  string reqID = 1;
+  int32 mode = 2;
+  bytes hash = 3;
+  bool onlyPrivKey = 4;
+}
+
+message SignResponse {
+  string reqID = 1;
+  int32 mode = 2;
+  string password = 3;
+  bytes imgSign = 4;
+  bytes pvtSign = 5;
+}
+
+message BasicReponse {
+  bool status = 1;
+  string message = 2;
+  bool signNeeded = 3;
+  SignRequest signRequest = 4;
+}
+
+message DataTokenReq {
+  string userID = 1;
+  string userInfo = 2;
+  string fileInfo = 3;
+  string committerDID = 4;
+  string batchID = 5;
+}
+
+message TokenReq {
+  string tokenType = 1;
+}
+
+message TokenDetial {
+  string token = 1;
+  int32 tokenState = 2;
+}
+
+message TokenResp {
+  repeated TokenDetial tokenDetials = 1;
+}
+
+
+message CommitDataTokenReq {
+  string batchID = 1;
 }
 
 message IncomingTxnDetails {
@@ -104,14 +166,16 @@ message TransactionHistory {
 }
 
 service RubixService {
-  rpc CreateDIDChallenge (ChallengeReq) returns (ChallengeString) {}
+  rpc GetDIDChallenge (ChallengeReq) returns (ChallengeResp) {}
+  rpc GetDIDAccess (AccessReq) returns (Token) {}
   rpc CreateDID (CreateDIDReq) returns (CreateDIDRes) {}
-  rpc InitiateTransaction (RequestTransactionPayloadReq) returns (RequestTransactionPayloadRes) {}
+  rpc GetAllTokens (TokenReq) returns (TokenResp) {}
+  rpc TransferRBT (TransferRBTReq) returns (BasicReponse) {}
+  rpc CreateDataToken (DataTokenReq) returns (BasicReponse) {}
+  rpc CommitDataToken (CommitDataTokenReq) returns (BasicReponse) {}
   rpc StreamIncomingTxn (google.protobuf.Empty) returns (stream IncomingTxnDetails) {}
-  rpc SignResponse (HashSigned) returns (Status) {}
-  rpc GenerateRbt (GenerateReq) returns (RequestTransactionPayloadRes) {}
+  rpc StreamSignature (stream SignResponse) returns (stream BasicReponse) {}
+  rpc GenerateRBT (GenerateReq) returns (BasicReponse) {}
   rpc GetBalance (google.protobuf.Empty) returns (GetBalanceRes) {}
-  rpc GetAccessTokenChallenge (google.protobuf.Empty) returns (ChallengeString) {}
-  rpc GenerateAccessToken(SignedPayload) returns (Token) {}
   rpc GetTransactionHistory(google.protobuf.Empty) returns (TransactionHistory) {}
 }

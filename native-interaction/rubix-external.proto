@@ -3,7 +3,7 @@ syntax = "proto3";
 package protos;
 
 import "google/protobuf/empty.proto";
-
+option go_package = "github.com/getfexr/protos";
 message AuthRequest {
   string uuid = 1;
 }
