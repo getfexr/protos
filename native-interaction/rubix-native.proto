@@ -38,9 +38,10 @@ message CreateDIDReq {
   string didImage = 5;
   string publicShare = 6;
   string publicKey = 7;
-  string masterDid = 8;
+  string masterDID = 8;
+  bool rootDID = 9;
   // For sky's verification
-  SignedPayload ecdsaChallengeResponse = 9;
+  SignedPayload ecdsaChallengeResponse = 10;
 }
 
 message CreateDIDRes {
