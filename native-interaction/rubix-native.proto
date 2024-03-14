@@ -61,6 +61,7 @@ message HashSigned {
 
 message Status {
   bool status = 1;
+  string message = 2;
 }
 
 message GenerateReq {
