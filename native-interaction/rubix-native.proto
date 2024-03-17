@@ -51,6 +51,7 @@ message RequestTransactionPayloadReq {
 message RequestTransactionPayloadRes {
   string requestId = 1;
   string hash = 2;
+  bool onlyPrivateKey = 3;
 }
 
 message HashSigned {
@@ -62,6 +63,7 @@ message HashSigned {
 message Status {
   bool status = 1;
   string message = 2;
+  bool onlyPrivateKey = 3;
 }
 
 message GenerateReq {
